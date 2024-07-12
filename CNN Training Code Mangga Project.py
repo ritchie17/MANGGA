@@ -19,7 +19,7 @@ warnings.filterwarnings('ignore')
 ##############################################################
 # Configuration and Constants
 batch_size = 16
-epochs = 1000
+epochs = 500
 img_width = 461
 img_height = 259
 default_image_size = (img_height, img_width)  # Ensure dimensions are consistent (height, width)
