@@ -3,7 +3,7 @@ from rembg import remove
 import os
 
 # Specify the root directory where your images are located
-root_directory = "D:\AI Internship Repo\Renamed & FS Categorized Revised"
+root_directory = '/mnt/c/Users/Mangga/Documents/remback'
 
 
 # Recursively process images in subdirectories

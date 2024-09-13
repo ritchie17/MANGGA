@@ -18,31 +18,34 @@ warnings.filterwarnings('ignore')
 
 ##############################################################
 # Configuration and Constants
-batch_size = 64
+batch_size = 16
 epochs = 500
-img_width = 28
-img_height = 28
+img_width = 416
+img_height = 259
 default_image_size = (img_height, img_width)  # Ensure dimensions are consistent (height, width)
-data_dir = '/mnt/f/mnist_dataset/train/'
+data_dir = '/mnt/d/Dataset August/Grading/Export VS Non-export/Side'
 channels = 3
 AUTOTUNE = tf.data.AUTOTUNE
 train_split = 0.75
 val_split = 0.15
 test_split = 0.10
 ##############################################################
-# Prompt user
+# Prompt user for training type and orientation
 data_name = input("Enter the name of the data being trained: ")
-training_type = input("Enter classification type ,maturity or grading: ")
+training_type = input("Enter classification type (maturity or grading): ").lower()
+orientation = input("Enter the orientation (top, side, or bottom): ").lower()
 
 ##############################################################
-# Create a directory to save outputs
+# Create a directory to save outputs based on training type and orientation
 def create_output_dir():
     current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
-    output_dir = f"Training_run_{current_time}_{training_type}_{data_name}"
+    output_dir = os.path.join(training_type, orientation, f"Training_run_{current_time}_{data_name}")
     os.makedirs(output_dir, exist_ok=True)
     return output_dir, current_time
 
 output_dir, current_time = create_output_dir()
+
+##############################################################
 
 ##############################################################
 # Function to save figures

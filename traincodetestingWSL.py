@@ -18,12 +18,12 @@ warnings.filterwarnings('ignore')
 
 ##############################################################
 # Configuration and Constants
-batch_size = 64
-epochs = 500
-img_width = 28
-img_height = 28
+batch_size = 16
+epochs = 5
+img_width = 461
+img_height = 259
 default_image_size = (img_height, img_width)  # Ensure dimensions are consistent (height, width)
-data_dir = '/mnt/f/mnist_dataset/train/'
+data_dir = '/mnt/d/DATASETS(july)/Grading/Orientation/TOP/Top Orientation/'
 channels = 3
 AUTOTUNE = tf.data.AUTOTUNE
 train_split = 0.75
@@ -38,7 +38,7 @@ training_type = input("Enter classification type ,maturity or grading: ")
 # Create a directory to save outputs
 def create_output_dir():
     current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
-    output_dir = f"Training_run_{current_time}_{training_type}_{data_name}"
+    output_dir = f"Training_run_{current_time}_{training_type}"
     os.makedirs(output_dir, exist_ok=True)
     return output_dir, current_time
 
@@ -177,8 +177,8 @@ model.compile(
 
 ##############################################################
 # Define callbacks for training
-early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
-reduce_lr = ReduceLROnPlateau(monitor='val_accuracy', factor=0.1, patience=20, min_lr=0.000001)
+early_stopping = EarlyStopping(monitor='val_accuracy', patience=20, restore_best_weights=True)
+reduce_lr = ReduceLROnPlateau(monitor='val_accuracy', factor=0.1, patience=20, min_lr=0)
 temp_model_path = os.path.join(output_dir, 'temp_model.h5')
 model_checkpoint = ModelCheckpoint(filepath=temp_model_path, monitor="val_accuracy",
                                    save_best_only=True, mode="auto", save_freq="epoch")
@@ -189,7 +189,7 @@ history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=epochs,
-    callbacks=[reduce_lr,model_checkpoint, csv_logger]  # early_stopping, 
+    callbacks=[reduce_lr, model_checkpoint, csv_logger]  # early_stopping,
 )
 
 ##############################################################
@@ -296,7 +296,7 @@ def save_metrics_info(output_dir, data_dir, batch_size, epochs, starting_lr,
                    f"Validation Accuracy: {validation_accuracy}\n" \
                    f"Test Accuracy: {test_accuracy}\n" \
                    f"Validation Loss for Best Model: {validation_loss}\n\n" \
-                   f"Model Summary:\n{model_summary}"\
+                   f"Model Summary:\n{model_summary}"
 
     metrics_file = os.path.join(output_dir, 'metrics_info.txt')
     with open(metrics_file, 'w') as f:

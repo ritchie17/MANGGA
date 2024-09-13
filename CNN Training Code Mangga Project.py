@@ -19,11 +19,11 @@ warnings.filterwarnings('ignore')
 ##############################################################
 # Configuration and Constants
 batch_size = 16
-epochs = 500
+epochs = 1000
 img_width = 461
 img_height = 259
 default_image_size = (img_height, img_width)  # Ensure dimensions are consistent (height, width)
-data_dir = '/mnt' #Runs inside UBUNTU via WSL(Windows Subsystem for Linux) must include #'/mnt/letterofdrive' to call windows system drives
+data_dir = '/mnt/d/DATASETS(july)/Grading/Orientation/SIDE'
 channels = 3
 AUTOTUNE = tf.data.AUTOTUNE
 train_split = 0.70
